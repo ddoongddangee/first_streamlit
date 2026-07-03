@@ -1,51 +1,30 @@
-import  streamlit as st
-import pandas as pd
-import numpy as np
+import streamlit as st
 
-#페이지 설정
 st.set_page_config(
-    page_title="My first Streamlit App",
-    page_icon=":tada:",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    page_title="주짓수 스타일 테스트",
+    page_icon="🥋",
+    layout="wide"
 )
 
-#제목과 소개
-st.title("환영합니다! :wave:")
-st.markdown('## streamlit 어플리케이션')
+st.title("🥋 주짓수 스타일 테스트 앱")
 
-st.write("""이앱은 STREAMLIT의 기본 기능을 보여줍니다.
-        아래에서 다양한 요소들을 확인헤보세요""")
+st.markdown("""
+### 제출자 정보
 
-#사이드바
-st.sidebar.header("사이드바 메뉴")
-option = st.sidebar.selectbox(
-    '원하는 기능을 선택하세요',
-    ['데이터 보기', '차트 보기', '정보']
-)
+- **학번:** 2020204074  
+- **이름:** 김지형
+""")
 
+st.divider()
 
+st.subheader("앱 소개")
 
-#샘플 데이터 생성
+st.write("""
+이 앱은 사용자가 주짓수 상황별 질문에 답하면,
+답변을 바탕으로 자신의 주짓수 스타일을 분석해주는 테스트 앱입니다.
 
-if option == '데이터 보기':
-    st.header("샘플 데이터")
-    data = pd.DataFrame({
-        '이름' : ['Alice', 'Bob', 'Charlie', 'David', 'Eva'],
-        '나이' : [25, 30, 35, 40, 45],
-        '점수' : [85, 90, 95, 80, 70]
-    })
-    st.dataframe(data)
-    
-elif option == '차트 보기':
-    st.header("샘플 차트")
-    chart_data = pd.DataFrame(
-        np.random.randn(20, 3),
-        columns=['A', 'B', 'C']
-    )
-    st.line_chart(chart_data)
+왼쪽 사이드바에서 **Login 페이지**로 이동해 로그인한 뒤,
+**Style Test 페이지**에서 퀴즈를 풀 수 있습니다.
+""")
 
-elif option == '정보':
-    st.header("정보")
-    st.info("이 앱은 Streamlit을 사용하여 만들어졌습니다.")
-    st.balloons()
+st.info("먼저 왼쪽 사이드바에서 Login 페이지로 이동하세요.")
