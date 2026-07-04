@@ -32,7 +32,7 @@ st.divider()
 col1, col2 = st.columns([1, 1])
 
 with col1:
-    st.subheader("육각 스탯 분석")
+    st.subheader("스탯 분석")
 
     categories = list(hex_stats.keys())
     values = list(hex_stats.values())
