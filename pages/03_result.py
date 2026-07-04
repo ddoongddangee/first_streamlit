@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 import plotly.graph_objects as go
 from quiz_data import STYLE_INFO
 
@@ -16,9 +15,8 @@ if "is_tested" not in st.session_state or not st.session_state.is_tested:
     st.stop()
 
 code = st.session_state.result_code
-hex_stats = st.session_state.hex_stats
+hex_stats = {key: max(0.0, value) for key, value in st.session_state.hex_stats.items()}
 
-# 예외 처리: 코드가 STYLE_INFO에 없을 경우 방어 코드
 if code not in STYLE_INFO:
     st.error("알 수 없는 코드입니다. 다시 테스트를 진행해 주세요.")
     st.stop()
@@ -35,47 +33,48 @@ col1, col2 = st.columns([1, 1])
 
 with col1:
     st.subheader("육각 스탯 분석")
-    
-    # 육각 그래프(Radar Chart) 그리기
+
     categories = list(hex_stats.keys())
     values = list(hex_stats.values())
-    
-    # 닫힌 도형을 위해 첫 값을 끝에 추가
+
     categories_plot = categories + [categories[0]]
     values_plot = values + [values[0]]
-    
+
     fig = go.Figure()
     fig.add_trace(go.Scatterpolar(
         r=values_plot,
         theta=categories_plot,
-        fill='toself',
-        name='Stats',
-        line_color='indigo'
+        fill="toself",
+        name="Stats",
+        line_color="indigo"
     ))
-    
+
     fig.update_layout(
         polar=dict(
             radialaxis=dict(
                 visible=True,
-                range=[0, max(max(values) + 1, 5)] # 최대값 유동적 조정
+                range=[0, max(max(values) + 1, 5)]
             )),
         showlegend=False,
         margin=dict(l=40, r=40, t=40, b=40)
     )
-    
+
     st.plotly_chart(fig, use_container_width=True)
 
 with col2:
     st.subheader("훈련 및 추천")
-    
+
     st.markdown("**🛡️ 추천 기술 (Recommended Skills):**")
     for skill in result["skills"]:
         st.write(f"- {skill}")
-        
-    st.markdown("**🥋 추천 선수 (Reference Players):**")
-    for player in result["players"]:
-        st.write(f"- {player}")
-        
+
+    if "players" in result:
+        st.markdown("**🥋 추천 선수 (Reference Players):**")
+        for player in result["players"]:
+            st.write(f"- {player}")
+    else:
+        st.info("추천 선수 정보는 아직 준비 중입니다.")
+
     st.markdown("**💪 추천 훈련 방향 (Training Direction):**")
     for training in result["training"]:
         st.write(f"- {training}")

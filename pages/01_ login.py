@@ -10,11 +10,11 @@ if "logged_in" not in st.session_state:
 if "username" not in st.session_state:
     st.session_state.username = ""
 
-USER_ID = "bjj"
+USER_ID = "boxer"
 USER_PW = "1234"
 
 st.write("테스트용 계정")
-st.code("ID: bjj\nPW: 1234")
+st.code("ID: boxer\nPW: 1234")
 
 user_id = st.text_input("아이디")
 user_pw = st.text_input("비밀번호", type="password")
